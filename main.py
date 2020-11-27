@@ -1,32 +1,26 @@
-
 from gru import GRU
-from service.preprocess_service import to_prepare
 from utils import logging_utils
+from utils.logging_utils import time_since
 import logging as log
 
 import torch
 from torch import nn
 from torchtext import data
+import torch.optim as optim
 from torchtext.vocab import Vectors
 
-import torch
-from torchtext import data
-
-import numpy as np
 import pandas as pd
+import time
 
 from sklearn.metrics import accuracy_score, confusion_matrix
 import seaborn as sns
-
-import time
-import math
-
-import torch.optim as optim
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
-fonts = FontProperties(fname="./font/TaipeiSansTCBeta-Bold.ttf")#為了顯示中文，載入一個中文字體
+
+fonts = FontProperties(fname="./font/TaipeiSansTCBeta-Bold.ttf")  # 為了顯示中文，載入一個中文字體
 
 device = torch.device('cpu')
+
 
 def main():
     # to_prepare("./dataset/Taipei_QA_new.txt")
@@ -40,10 +34,10 @@ def main():
     epoch = 10
 
     gru_model = GRU(input_size=vocab_size,
-                     embedding_dim=embedding_dim,
-                     hidden_dim=hidden_dim,
-                     num_layers=layer_dim,
-                     output_dim=output_dim)
+                    embedding_dim=embedding_dim,
+                    hidden_dim=hidden_dim,
+                    num_layers=layer_dim,
+                    output_dim=output_dim)
     print(gru_model)
 
     optimizer = optim.Adam(gru_model.parameters(), lr=0.001)
@@ -122,7 +116,7 @@ def train_model(model, traindata_loader, testdata_loader,
         train_acc_all.append(train_corrects.double().item() / train_num)
 
         log.info("====Epoch {} Train Loss: {:.4f} Train Acc{:.4f} ====".format(epoch, train_loss_all[-1],
-                                                                          train_acc_all[-1]))
+                                                                               train_acc_all[-1]))
 
         scheduler.step()  # 更新學習率
 
@@ -142,7 +136,7 @@ def train_model(model, traindata_loader, testdata_loader,
         test_acc_all.append(test_corrects.double().item() / test_num)
 
         log.info("====Epoch {} Test Loss: {:.4f} Test Acc{:.4f}====".format(epoch, test_loss_all[-1],
-                                                                      test_acc_all[-1]))
+                                                                            test_acc_all[-1]))
 
     train_process = pd.DataFrame(data={
         "epoch": range(num_epoch),
@@ -188,6 +182,7 @@ def eval_RNN(test_iter):
     plt.xlabel("Predicted label")
     plt.show()
 
+
 def load_train_data():
     TEXT = data.Field(sequential=True,  # 表明輸入的數據是文本數據
                       tokenize=lambda x: x.split(" "),  # 分詞邏輯
@@ -211,7 +206,7 @@ def load_train_data():
     # 通過上述方式定義讀取數據的邏輯
 
     traindata, testdata = data.TabularDataset.splits(
-        path= "./train_data", format="csv",
+        path="./train_data", format="csv",
         train="qa_balance_train.csv", fields=text_data_field,
         test="qa_balance_test.csv",
         skip_header=True
@@ -224,7 +219,7 @@ def load_train_data():
         break
 
     vectors = Vectors(
-        name= "./trained_model/word2vec_wiki_zh.model.txt"
+        name="./trained_model/word2vec_wiki_zh.model.txt"
     )
 
     # 建立詞表
@@ -268,11 +263,6 @@ def load_train_data():
 
     return TEXT, train_iter, test_iter
 
-def time_since(since):
-    s = time.time() - since
-    m = math.floor(s / 60)
-    s -= m * 60
-    return "%dm %ds" % (m, s)
 
 if __name__ == '__main__':
     logging_utils.Init_logging()
