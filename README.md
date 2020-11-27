@@ -14,6 +14,11 @@ label 臺北市政府文化局
 question 2018台北電影節FAQ
 ```
 
+## Colab
+- https://github.com/nicktien007/Nick.Colab/blob/main/Lab/HW4_GRU_Nick1.ipynb
+- https://github.com/nicktien007/Nick.Colab/blob/main/Lab/HW4_GRU_Nick2.ipynb
+- https://github.com/nicktien007/Nick.Colab/blob/main/Lab/HW4_GRU_Nick_Final.ipynb
+
 ## 前25個高頻詞
 ![](https://i.imgur.com/pn3LnWc.png)
 
