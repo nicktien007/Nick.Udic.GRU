@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 .idea/
 temp/
-./trained_model
-./.vector_cache
+trained_model
+.vector_cache

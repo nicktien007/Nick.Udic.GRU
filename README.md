@@ -1,6 +1,18 @@
-# Nick.Udic.GRU
-Lab GRU 作業
+# 使用GRU訓練問答機器人
 
+- 資料集筆數：7987筆
+- 分類數：149類
+
+```
+label 臺北市政府文化局
+question 2018臺北藝術節FAQ
+
+label 臺北市政府文化局
+question 臺北市信義區Neo19大樓後方人行道後場使用作業通告(107/06/03-05)
+
+label 臺北市政府文化局
+question 2018台北電影節FAQ
+```
 
 ## 前25個高頻詞
 ![](https://i.imgur.com/pn3LnWc.png)
